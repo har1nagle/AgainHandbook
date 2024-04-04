@@ -3,15 +3,16 @@ using Again.DataAcess.Data;
 using AgainHandbook.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgainHandbook.Controllers
+namespace AgainHandbook.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         //Constructor (ctor)
         public CategoryController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;  
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
@@ -29,7 +30,7 @@ namespace AgainHandbook.Controllers
 
         // Create Category List
         [HttpPost]
-        public IActionResult Create(Category obj) 
+        public IActionResult Create(Category obj)
         {
             if (obj.Name == obj.DisplayOrder.ToString())
             {
@@ -49,8 +50,8 @@ namespace AgainHandbook.Controllers
         //Edit Category List
         public IActionResult Edit(int? id)
         {
-            if (id == null || id == 0) 
-            { 
+            if (id == null || id == 0)
+            {
                 return NotFound();
             }
             Category categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
@@ -60,7 +61,7 @@ namespace AgainHandbook.Controllers
             }
             return View(categoryFromDb);
         }
-        
+
         // Update Category List
         [HttpPost]
         public IActionResult Edit(Category obj)
@@ -96,7 +97,7 @@ namespace AgainHandbook.Controllers
         public IActionResult DeletePOST(int? id)
         {
             Category? obj = _unitOfWork.Category.Get(u => u.Id == id);
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }
