@@ -24,7 +24,9 @@ namespace Again.DataAcess.Data
             modelBuilder.Entity<Library>().HasData(
                 new Library { Id = 1, Name = "Sos file test", CategoryId = 1 },
                 new Library { Id = 2, Name = "circular file test", CategoryId = 2 },
-                new Library { Id = 3, Name = " I am new file test", CategoryId = 1 }
+                new Library { Id = 3, Name = " I am new file test", CategoryId = 1 },
+                new Library { Id = 4, Name = " try n one more file for test", CategoryId = 2 }
+
 
                 );
         }
