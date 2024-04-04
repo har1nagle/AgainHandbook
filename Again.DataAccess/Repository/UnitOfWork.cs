@@ -13,10 +13,15 @@ namespace Again.DataAccess.Repository
     {
         private ApplicationDbContext _db;
         public ICategoryRepository Category { get; private set; }
+
+        public ILibraryRepository Library { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Category = new CategoryRepository(_db);
+            Library = new LibraryRepository(_db);
+
 
         }
 

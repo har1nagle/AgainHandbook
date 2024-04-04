@@ -9,6 +9,9 @@ namespace Again.DataAccess.Repository.IRepository
     public interface IUnitOfWork
     {
         ICategoryRepository Category { get; }
+
+        ILibraryRepository Library { get; }
+
         void Save();
     }
 }
