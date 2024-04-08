@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Again.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240406023436_again migration")]
-    partial class againmigration
+    [Migration("20240408053659_Again Reset")]
+    partial class AgainReset
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "9.0.0-preview.2.24128.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -71,12 +71,12 @@ namespace Again.DataAccess.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("SelectedDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -89,29 +89,29 @@ namespace Again.DataAccess.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Sos file test"
+                            Name = "Sos file test",
+                            SelectedDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 2,
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "circular file test"
+                            Name = "circular file test",
+                            SelectedDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             Id = 3,
                             CategoryId = 1,
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = " I am new file test"
+                            Name = " I am new file test",
+                            SelectedDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             Id = 4,
                             CategoryId = 2,
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = " try n one more file for test"
+                            Name = " try n one more file for test",
+                            SelectedDate = new DateOnly(1, 1, 1)
                         });
                 });
 

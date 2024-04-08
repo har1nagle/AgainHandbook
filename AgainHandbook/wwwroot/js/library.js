@@ -8,6 +8,7 @@ function loadDataTable() {
             { data: 'name', "width": "15%" },
             { data: 'category.name', "width": "10%" },
 
+
             //{
             //    data: 'category',
             //    "render": function (data) {

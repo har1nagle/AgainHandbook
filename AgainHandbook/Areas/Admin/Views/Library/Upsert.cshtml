@@ -1,42 +1,56 @@
 ﻿@model LibraryVM
 
-<form method="post" enctype="multipart/form-data">
-@*     <input asp-for="Library.Id" hidden/>
- *@
-    <div class="border p-3 mt-4">
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-primary bg-gradient ml-0 py-2">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h4 class="text-white">
+                    @(Model.Library.Id != 0 ? "Update" : "Create") List
+                </h4>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data">
+             <input asp-for="Library.Id" hidden/>
+     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">@(Model.Library.Id!=0?"Update":"Create") List</h2>
         </div>
 
-        <div class="mb-3 row p-1">
+        <div class="py-2 col-12">
             <label asp-for="Library.Name" class="p-0"></label>
             <input asp-for="Library.Name" class="form-control" />
             <span asp-validation-for="Library.Name" class="text-danger"></span>
         </div>
-
-
-        <div class="mb-3 row p-1">
-            <label asp-for="@Model.Library.CategoryId" class="p-0"></label>
-            <select asp-for="Library.CategoryId" asp-items="@Model.CategoryList" class="form-select p-0">
+        
+          <div class="py-2 col-12">
+              <label asp-for="@Model.Library.CategoryId" class="p-0"></label>
+              <select asp-for="Library.CategoryId" asp-items="@Model.CategoryList" class="form-select border-1">
                 <option disabled selected>--Select Category--</option>
-            </select>
-            <span asp-validation-for="Library.CategoryId" class="text-danger"></span>
-        </div>
+              </select>
+              <span asp-validation-for="Library.CategoryId" class="text-danger"></span>
+          </div>
 
-        <div class="mb-3 row p-1">
+          <div class="py-2 col-12">
             <label asp-for="Library.SelectedDate" class="p-0"></label>
             <input asp-for="Library.SelectedDate" class="form-control" />
             <span asp-validation-for="Library.SelectedDate" class="text-danger"></span>
          </div>
 
 
-        <div class="row">
-            <div class="col-6 col-md-3">
-                @if(Model.Library.Id != 0) {
-                    <button type="submit" class="btn btn-primary form-control">Update</button>
-                } else {
-                <button type="submit" class="btn btn-primary form-control">Create</button>
-                }
+
+        <div class="row mt-2">
+            <div class="col-6 col-md-3 ">
+                        @if (Model.Library.Id != 0)
+                        {
+                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                        }
+                        else
+                        {
+                        <button type="submit" class="btn btn-primary form-control">Create</button>
+                        }
             </div>
             <div class="col-6 col-md-3">
                 <a asp-controller="Library" asp-action="Index" class="btn btn-outline-secondary form-control">Back To List</a>
@@ -45,6 +59,12 @@
         </div>
     </div>
 </form>
+
+
+    </div>
+</div>
+
+
 
  @* Client Side Validation *@
 

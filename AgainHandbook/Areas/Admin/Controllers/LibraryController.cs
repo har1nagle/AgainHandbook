@@ -5,6 +5,7 @@ using AgainHandbook.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace AgainHandbook.Areas.Admin.Controllers
 {
@@ -12,7 +13,6 @@ namespace AgainHandbook.Areas.Admin.Controllers
     public class LibraryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        //Constructor (ctor)
         public LibraryController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -36,74 +36,53 @@ namespace AgainHandbook.Areas.Admin.Controllers
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }),
-            Library = new Library()
+                Library = new Library()
             };
 
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 //create
                 return View(libraryVM);
 
-            } else
-            {
+            }
+            else
+            
                 //Update
-                libraryVM.Library = _unitOfWork.Library.Get(u=>u.Id== id);
+                libraryVM.Library = _unitOfWork.Library.Get(u => u.Id == id);
                 return View(libraryVM);
 
-            }
+            
         }
 
-
-        //Library Create Library List
         [HttpPost]
-        public IActionResult Upsert(LibraryVM libraryVM, IFormFile? file)
+        public IActionResult Upsert(LibraryVM libraryVM)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Library.Add(libraryVM.Library);
+                if (libraryVM.Library.Id == 0) // If ID is 0, it's a new record
+                {
+                    _unitOfWork.Library.Add(libraryVM.Library);
+                    TempData["success"] = "Library Created successfully";
+                }
+                else // If ID is not 0, it's an existing record
+                {
+                    _unitOfWork.Library.Update(libraryVM.Library);
+                    TempData["success"] = "Library Updated successfully";
+                }
+
                 _unitOfWork.Save();
-                TempData["success"] = "Library Created successfully";
                 return RedirectToAction("Index");
-            } else
+            }
+            else
             {
                 libraryVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
                 });
-            return View(libraryVM);
+                return View(libraryVM);
             }
-
-
         }
-        //public IActionResult Delete(int? id)
-        //{
-        //    if (id == null || id == 0)
-        //    {
-        //        return NotFound();
-        //    }
-        //    Library libraryFromDb = _unitOfWork.Library.Get(u => u.Id == id);
-        //    if (libraryFromDb == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(libraryFromDb);
-        //}
-
-        //// Delete Library List
-        //[HttpPost, ActionName("Delete")]
-        //public IActionResult DeletePOST(int? id)
-        //{
-        //    Library? obj = _unitOfWork.Library.Get(u => u.Id == id);
-        //    if (obj == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _unitOfWork.Library.Remove(obj);
-        //    _unitOfWork.Save();
-        //    TempData["success"] = "Library deleted successfully";
-        //    return RedirectToAction("Index");
-        //}
 
 
         #region API CALLS
