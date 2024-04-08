@@ -1,8 +1,8 @@
 ﻿@model LibraryVM
 
 <form method="post" enctype="multipart/form-data">
-    <input asp-for="Library.Id" hidden/>
-
+@*     <input asp-for="Library.Id" hidden/>
+ *@
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">@(Model.Library.Id!=0?"Update":"Create") List</h2>
@@ -14,6 +14,7 @@
             <span asp-validation-for="Library.Name" class="text-danger"></span>
         </div>
 
+
         <div class="mb-3 row p-1">
             <label asp-for="@Model.Library.CategoryId" class="p-0"></label>
             <select asp-for="Library.CategoryId" asp-items="@Model.CategoryList" class="form-select p-0">
@@ -21,6 +22,12 @@
             </select>
             <span asp-validation-for="Library.CategoryId" class="text-danger"></span>
         </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="Library.SelectedDate" class="p-0"></label>
+            <input asp-for="Library.SelectedDate" class="form-control" />
+            <span asp-validation-for="Library.SelectedDate" class="text-danger"></span>
+         </div>
 
 
         <div class="row">

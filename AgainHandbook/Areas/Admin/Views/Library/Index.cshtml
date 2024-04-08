@@ -11,23 +11,27 @@
             </a>
         </div>
     </div>
-    <table class="table table-bordered table-striped">
+    <table id="tblData" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>
-                    File Name
+                    Name
                 </th>
                 <th>
                     Category
                 </th>
-                 <th>
-
+                <th>
+                    Upload Date
+                 </th>
+                <th>
+                   
                 </th>
-               
+            
+
             </tr>
         </thead>
         <tbody>
-            @foreach (var obj in Model.OrderBy(x => x.Name))
+           @*  @foreach (var obj in Model.OrderBy(x => x.Name))
             {
                 <tr>
                     <td>@obj.Name</td>
@@ -42,15 +46,15 @@
                                 <i class="bi bi-trash-fill"></i> Delete
                             </a>
                         </div>
-                    </td>
-
-
-
-                    
+                    </td>                    
 
                 </tr>
-            }
+            } *@
         </tbody>
     
     </table>
 </div>
+
+@section Scripts{
+    <script src="/js/library.js"></script>
+}

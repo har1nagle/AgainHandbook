@@ -76,10 +76,7 @@ namespace AgainHandbook.Areas.Admin.Controllers
 
 
         }
-
-
-        //Edit Library List
-        //public IActionResult Edit(int? id)
+        //public IActionResult Delete(int? id)
         //{
         //    if (id == null || id == 0)
         //    {
@@ -93,34 +90,43 @@ namespace AgainHandbook.Areas.Admin.Controllers
         //    return View(libraryFromDb);
         //}
 
-        //Delete Library List
+        //// Delete Library List
+        //[HttpPost, ActionName("Delete")]
+        //public IActionResult DeletePOST(int? id)
+        //{
+        //    Library? obj = _unitOfWork.Library.Get(u => u.Id == id);
+        //    if (obj == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    _unitOfWork.Library.Remove(obj);
+        //    _unitOfWork.Save();
+        //    TempData["success"] = "Library deleted successfully";
+        //    return RedirectToAction("Index");
+        //}
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Library> objLibraryList = _unitOfWork.Library.GetAll(includeProperties: "Category").ToList();
+            return Json(new { data = objLibraryList });
+        }
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0)
+            var libraryToBeDeleted = _unitOfWork.Library.Get(u => u.Id == id);
+            if (libraryToBeDeleted == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Error while deleting" });
             }
-            Library libraryFromDb = _unitOfWork.Library.Get(u => u.Id == id);
-            if (libraryFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(libraryFromDb);
-        }
 
-        // Delete Library List
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            Library? obj = _unitOfWork.Library.Get(u => u.Id == id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
-            _unitOfWork.Library.Remove(obj);
+            _unitOfWork.Library.Remove(libraryToBeDeleted);
             _unitOfWork.Save();
-            TempData["success"] = "Library deleted successfully";
-            return RedirectToAction("Index");
+
+            return Json(new { success = true, message = "Deleted Successfully" });
         }
+        #endregion
     }
 }

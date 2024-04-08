@@ -15,5 +15,10 @@ namespace AgainHandbook.Models
         [ForeignKey("CategoryId")]
         [ValidateNever]
         public Category Category { get; set; }
+
+        [Required(ErrorMessage = "Please select a date")]
+        [DataType(DataType.Date)]        
+        public DateOnly SelectedDate { get; set; }
+
     }
 }

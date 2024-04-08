@@ -5,24 +5,24 @@
 namespace Again.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddLibraryInRow : Migration
+    public partial class againedited : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.InsertData(
+            migrationBuilder.RenameColumn(
+                name: "DateOfBirth",
                 table: "Libraries",
-                columns: new[] { "Id", "CategoryId", "Name" },
-                values: new object[] { 4, 2, " try n one more file for test" });
+                newName: "SelectedDate");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
+            migrationBuilder.RenameColumn(
+                name: "SelectedDate",
                 table: "Libraries",
-                keyColumn: "Id",
-                keyValue: 4);
+                newName: "DateOfBirth");
         }
     }
 }

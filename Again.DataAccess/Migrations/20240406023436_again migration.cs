@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,7 +8,7 @@
 namespace Again.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCategoryTpDbAndSeed : Migration
+    public partial class againmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,7 +34,8 @@ namespace Again.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,12 +59,13 @@ namespace Again.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Libraries",
-                columns: new[] { "Id", "CategoryId", "Name" },
+                columns: new[] { "Id", "CategoryId", "DateOfBirth", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, "Sos file test" },
-                    { 2, 2, "circular file test" },
-                    { 3, 1, " I am new file test" }
+                    { 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sos file test" },
+                    { 2, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "circular file test" },
+                    { 3, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " I am new file test" },
+                    { 4, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " try n one more file for test" }
                 });
 
             migrationBuilder.CreateIndex(
